@@ -3,6 +3,18 @@
     {
       "route": "/*",
       "allowedRoles": ["authenticated"]
+    },
+    {
+      "route": "/.auth/login/aad",
+      "allowedRoles": ["unauthenticated"]
+    },
+    {
+      "route": "/.auth/login/github",
+      "allowedRoles": ["unauthenticated"]
+    },
+    {
+      "route": "/.auth/logout",
+      "allowedRoles": ["unauthenticated"]
     }
   ],
   "responseOverrides": {
