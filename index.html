@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ask Bulfinch — Prompt Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1714;
+    --ink-mid: #4a4540;
+    --ink-soft: #7a7470;
+    --ink-faint: #b8b4b0;
+    --paper: #faf8f5;
+    --paper-warm: #f2efe8;
+    --paper-mid: #e8e4dc;
+    --accent: #2a5c3f;
+    --accent-light: #e8f0eb;
+    --accent-mid: #4a8c62;
+    --gold: #c49a3c;
+    --gold-light: #f5eddb;
+    --rule: rgba(26,23,20,0.10);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .masthead {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 3.5rem 2rem 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .masthead::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 60px,
+      rgba(255,255,255,0.015) 60px,
+      rgba(255,255,255,0.015) 61px
+    );
+    pointer-events: none;
+  }
+  .masthead-eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+  .masthead h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.25rem);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    line-height: 1.15;
+    color: var(--paper);
+    margin-bottom: 1rem;
+  }
+  .masthead h1 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+  .masthead-sub {
+    font-size: 15px;
+    font-weight: 300;
+    color: rgba(250,248,245,0.65);
+    max-width: 520px;
+    margin: 0 auto 2rem;
+    line-height: 1.6;
+  }
+  .masthead-meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 2px;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 400;
+    color: rgba(250,248,245,0.5);
+    letter-spacing: 0.04em;
+  }
+
+  /* ── LAYOUT ── */
+  .page {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 1.5rem 5rem;
+  }
+
+  /* ── INTRO STRIP ── */
+  .intro {
+    background: var(--accent-light);
+    border-left: 3px solid var(--accent);
+    padding: 1.25rem 1.5rem;
+    margin: 2.5rem 0;
+    border-radius: 0 4px 4px 0;
+  }
+  .intro p {
+    font-size: 14px;
+    color: var(--accent);
+    line-height: 1.65;
+  }
+  .intro strong { font-weight: 500; }
+
+  /* ── NAV PILLS ── */
+  .team-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 3rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .team-nav a {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-mid);
+    text-decoration: none;
+    border: 1px solid var(--paper-mid);
+    border-radius: 2px;
+    padding: 5px 12px;
+    transition: all 0.15s;
+    background: var(--paper);
+  }
+  .team-nav a:hover {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+
+  /* ── TEAM SECTION ── */
+  .team-section {
+    margin-bottom: 4rem;
+    scroll-margin-top: 2rem;
+  }
+  .team-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 1.75rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1.5px solid var(--ink);
+  }
+  .team-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 2px;
+    background: var(--ink);
+    color: var(--paper);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: 'Playfair Display', serif;
+    flex-shrink: 0;
+  }
+  .team-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.35rem;
+    font-weight: 400;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+
+  /* ── CATEGORY ── */
+  .category {
+    margin-bottom: 2rem;
+  }
+  .category-label {
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 0.75rem;
+  }
+
+  /* ── FAQ ITEM ── */
+  .faq-item {
+    border: 1px solid var(--paper-mid);
+    border-radius: 3px;
+    margin-bottom: 6px;
+    overflow: hidden;
+    transition: border-color 0.15s;
+    background: white;
+  }
+  .faq-item:hover { border-color: var(--ink-faint); }
+  .faq-item.open { border-color: var(--accent-mid); }
+
+  .faq-q {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 13px 16px;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .faq-q-text {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.5;
+    flex: 1;
+  }
+  .faq-chevron {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    color: var(--ink-faint);
+    margin-top: 1px;
+    transition: transform 0.2s;
+  }
+  .faq-item.open .faq-chevron { transform: rotate(180deg); color: var(--accent); }
+
+  .faq-body {
+    display: none;
+    padding: 0 16px 14px;
+    border-top: 1px solid var(--paper-mid);
+  }
+  .faq-item.open .faq-body { display: block; }
+
+  .faq-prompt {
+    background: var(--paper-warm);
+    border: 1px solid var(--paper-mid);
+    border-radius: 3px;
+    padding: 10px 13px;
+    font-size: 13px;
+    color: var(--accent);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    line-height: 1.55;
+    margin-top: 10px;
+    position: relative;
+  }
+  .faq-prompt::before {
+    content: 'Try asking →';
+    display: block;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 5px;
+  }
+  .faq-prompt em {
+    font-style: normal;
+    background: rgba(42,92,63,0.1);
+    border-radius: 2px;
+    padding: 0 3px;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .faq-note {
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    margin-top: 8px;
+    line-height: 1.5;
+  }
+  .faq-note strong { font-weight: 500; color: var(--ink-mid); }
+
+  /* ── COPY BUTTON ── */
+  .copy-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 8px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: var(--ink-faint);
+    background: none;
+    border: 1px solid var(--paper-mid);
+    border-radius: 2px;
+    padding: 4px 10px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .copy-btn:hover { color: var(--ink); border-color: var(--ink-faint); }
+  .copy-btn.copied { color: var(--accent); border-color: var(--accent); }
+
+  /* ── TIPS ── */
+  .tips-section {
+    background: var(--gold-light);
+    border: 1px solid rgba(196,154,60,0.25);
+    border-radius: 4px;
+    padding: 1.5rem;
+    margin-bottom: 3rem;
+  }
+  .tips-section h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 400;
+    margin-bottom: 0.85rem;
+    color: var(--ink);
+  }
+  .tips-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+  .tips-list li {
+    font-size: 13.5px;
+    color: var(--ink-mid);
+    padding-left: 1.1rem;
+    position: relative;
+    line-height: 1.55;
+  }
+  .tips-list li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-weight: 500;
+  }
+  .tips-list li strong { font-weight: 500; color: var(--ink); }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    padding: 2rem 0 0;
+    border-top: 1px solid var(--rule);
+    font-size: 12px;
+    color: var(--ink-faint);
+    letter-spacing: 0.04em;
+  }
+
+  @media (max-width: 600px) {
+    .masthead { padding: 2.5rem 1.25rem 2rem; }
+    .page { padding: 0 1rem 4rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="masthead-eyebrow">The Bulfinch Companies</div>
+  <h1>Ask Bulfinch<br><em>Prompt Guide</em></h1>
+  <p class="masthead-sub">A reference for teams to quickly find answers to common questions using AI-powered search across our SharePoint documents.</p>
+  <div class="masthead-meta">Questions answered directly from your SharePoint files</div>
+</div>
+
+<div class="page">
+
+  <div class="intro">
+    <p>Ask Bulfinch can search and synthesize information from lease documents, loan agreements, budget packages, valuation files, capital plans, and more — all stored in SharePoint. <strong>The prompts below are ready to use.</strong> Replace anything in <em>[brackets]</em> with the specific property, tenant, or year you need.</p>
+  </div>
+
+  <div class="tips-section">
+    <h3>Tips for best results</h3>
+    <ul class="tips-list">
+      <li><strong>Be specific.</strong> Include the full property address or tenant name — "60 First Ave, Waltham" works better than "the Waltham property."</li>
+      <li><strong>Add a time period.</strong> For budget or valuation questions, specify the year or quarter — "2026 budget" or "Q4 2025."</li>
+      <li><strong>Ask to summarize.</strong> For long documents like loan agreements, add "summarize" or "focus on [topic]" to get a direct answer rather than raw text.</li>
+      <li><strong>Chain questions.</strong> After getting an answer, follow up — "What notice period applies?" or "How does this compare to last year?"</li>
+    </ul>
+  </div>
+
+  <nav class="team-nav">
+    <a href="#asset-mgmt">Asset Management</a>
+    <a href="#accounting">Accounting</a>
+    <a href="#investments">Investments</a>
+    <a href="#property-mgmt">Property Management</a>
+    <a href="#legal">Legal</a>
+  </nav>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- ASSET MANAGEMENT -->
+  <!-- ══════════════════════════════════════ -->
+  <section class="team-section" id="asset-mgmt">
+    <div class="team-header">
+      <div class="team-icon">AM</div>
+      <h2>Asset Management</h2>
+    </div>
+
+    <div class="category">
+      <div class="category-label">Valuation &amp; Performance</div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">What is a property currently valued at and what assumptions drove that value?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"What is the current internal valuation of <em>[property]</em> and what assumptions were used — discount rate, exit cap rate, and market rent?"</div>
+          <p class="faq-note">Pulls from the Quarterly Valuation Tracker. Returns the current value, prior quarter comparison, and the methodology notes written by the AM team.</p>
+          <button class="copy-btn" onclick="copyPrompt(this, 'What is the current internal valuation of [property] and what assumptions were used — discount rate, exit cap rate, and market rent?')">Copy prompt</button>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">How has a property's value trended over the past year?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"How has the valuation of <em>[property]</em> changed over the last four quarters? Summarize the key drivers of any changes."</div>
+          <p class="faq-note">The Valuation Tracker includes prior quarter values and methodology notes going back multiple years, so quarter-over-quarter changes and the reasons behind them are readily available.</p>
+          <button class="copy-btn" onclick="copyPrompt(this, 'How has the valuation of [property] changed over the last four quarters? Summarize the key drivers of any changes.')">Copy prompt</button>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">What is a property's debt yield and DSCR?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"What is the debt yield and DSCR at <em>[property]</em> as of the most recent reporting period?"</div>
+          <p class="faq-note">Found in loan compliance reporting and budget packages.</p>
+          <button class="copy-btn" onclick="copyPrompt(this, 'What is the debt yield and DSCR at [property] as of the most recent reporting period?')">Copy prompt</button>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">What is a property's NOI for a given year?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"What is the NOI for <em>[property]</em> for <em>[year]</em>, and how does it compare to the prior year?"</div>
+          <p class="faq-note">Pulls from budget packages and the AM deck presentation backup files.</p>
+          <button class="copy-btn" onclick="copyPrompt(this, 'What is the NOI for [property] for [year], and how does it compare to the prior year?')">Copy prompt</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="category">
+      <div class="category-label">Leasing &amp; Tenancy</div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">Does a tenant have renewal, termination, or expansion options?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"Does <em>[tenant]</em> have any renewal options, termination options, or expansion rights at <em>[property]</em>? Summarize the terms."</div>
+          <p class="faq-note">Searches the lease and all amendments for the tenant. Returns notice periods, conditions, pricing, and any other relevant terms.</p>
+          <button class="copy-btn" onclick="copyPrompt(this, 'Does [tenant] have any renewal options, termination options, or expansion rights at [property]? Summarize the terms.')">Copy prompt</button>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">What does the portfolio lease rollover schedule look like?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"What is the portfolio lease rollover schedule for the next 24 months based on the most recent Asset Management meeting presentation?"</div>
+          <p class="faq-note">The AM meeting decks include a 10-year rollover chart broken out by year as a percentage of portfolio. Best source for portfolio-wide expiration exposure.</p>
+          <button class="copy-btn" onclick="copyPrompt(this, 'What is the portfolio lease rollover schedule for the next 24 months based on the most recent Asset Management meeting presentation?')">Copy prompt</button>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">What are the key leasing updates across the portfolio?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"What are the key leasing updates and market observations from the most recent Asset Management meeting presentation?"</div>
+          <p class="faq-note">AM meeting decks are updated regularly and include new leases, renewals, active proposals, and market commentary across the portfolio.</p>
+          <button class="copy-btn" onclick="copyPrompt(this, 'What are the key leasing updates and market observations from the most recent Asset Management meeting presentation?')">Copy prompt</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="category">
+      <div class="category-label">Debt &amp; Capital</div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">What are the loan terms for a property?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"What are the loan terms for <em>[property]</em> — lender, balance, rate, maturity, and any extension options?"</div>
+          <p class="faq-note">Loan agreements are consistently filed under each property's debt folder and are fully readable. Returns a clean summary of all key terms.</p>
+          <button class="copy-btn" onclick="copyPrompt(this, 'What are the loan terms for [property] — lender, balance, rate, maturity, and any extension options?')">Copy prompt</button>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">What are the extension conditions for a specific loan?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"What are the extension conditions for the loan at <em>[property]</em>? Include notice periods, financial tests, and any fees required."</div>
+          <p class="faq-note">Extension provisions are typically in Section 2.4 of loan agreements. Returns LTV thresholds, debt yield and DSCR requirements, notice windows, and extension fee obligations.</p>
+          <button class="copy-btn" onclick="copyPrompt(this, 'What are the extension conditions for the loan at [property]? Include notice periods, financial tests, and any fees required.')">Copy prompt</button>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">Which properties have debt maturing soon?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"Which properties have debt maturing in the next 18 months? Summarize from the most recent Asset Management meeting or Leviathan presentation."</div>
+          <p class="faq-note">The AM and Leviathan decks include debt maturity charts broken out by year as a percentage of portfolio debt.</p>
+          <button class="copy-btn" onclick="copyPrompt(this, 'Which properties have debt maturing in the next 18 months? Summarize from the most recent Asset Management meeting or Leviathan presentation.')">Copy prompt</button>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">What ongoing covenants must the borrower maintain under a loan?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"What covenants does the borrower need to maintain under the loan at <em>[property]</em>?"</div>
+          <p class="faq-note">Covers both financial covenants (debt yield, DSCR, LTV) and operational covenants (insurance, leasing approvals, reporting requirements).</p>
+          <button class="copy-btn" onclick="copyPrompt(this, 'What covenants does the borrower need to maintain under the loan at [property]?')">Copy prompt</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- ACCOUNTING -->
+  <!-- ══════════════════════════════════════ -->
+  <section class="team-section" id="accounting">
+    <div class="team-header">
+      <div class="team-icon">AC</div>
+      <h2>Accounting</h2>
+    </div>
+
+    <div class="category">
+      <div class="category-label">Budgets &amp; NOI</div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">What does a property's budget look like for a given year?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"Pull the <em>[year]</em> budget for <em>[property]</em> and summarize total income, operating expenses, and NOI."</div>
+          <p class="faq-note">Budget packages are consistently filed under each property's Annual Business Plan folder and are fully readable.</p>
+          <button class="copy-btn" onclick="copyPrompt(this, 'Pull the [year] budget for [property] and summarize total income, operating expenses, and NOI.')">Copy prompt</button>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">What are the management fees budgeted for a property?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"What are the management fees budgeted for <em>[property]</em> in <em>[year]</em>?"</div>
+          <button class="copy-btn" onclick="copyPrompt(this, 'What are the management fees budgeted for [property] in [year]?')">Copy prompt</button>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">What are the utility expenses budgeted for a property?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"List all utility expenses budgeted for <em>[property]</em> in <em>[year]</em>, broken out by type."</div>
+          <p class="faq-note">Returns electric, gas, water/sewer broken out by month and annually.</p>
+          <button class="copy-btn" onclick="copyPrompt(this, 'List all utility expenses budgeted for [property] in [year], broken out by type.')">Copy prompt</button>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">What tenant reimbursements are budgeted for a property?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"What tenant reimbursements are budgeted for <em>[property]</em> in <em>[year]</em>? Break out by CAM, real estate taxes, and insurance."</div>
+          <button class="copy-btn" onclick="copyPrompt(this, 'What tenant reimbursements are budgeted for [property] in [year]? Break out by CAM, real estate taxes, and insurance.')">Copy prompt</button>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">What are the real estate taxes budgeted for a property?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"What is the real estate tax expense budgeted for <em>[property]</em> in <em>[year]</em>?"</div>
+          <button class="copy-btn" onclick="copyPrompt(this, 'What is the real estate tax expense budgeted for [property] in [year]?')">Copy prompt</button>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">What are the projected mortgage and interest costs for a property?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"What are the scheduled mortgage principal payments and interest expense for <em>[property]</em> in the <em>[year]</em> budget?"</div>
+          <button class="copy-btn" onclick="copyPrompt(this, 'What are the scheduled mortgage principal payments and interest expense for [property] in the [year] budget?')">Copy prompt</button>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">What does the projected cash flow look like for a property?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"Summarize the projected cash flow for <em>[property]</em> based on the <em>[year]</em> budget."</div>
+          <p class="faq-note">Covers NOI, debt service, capital expenditures, and net cash flow after adjustments.</p>
+          <button class="copy-btn" onclick="copyPrompt(this, 'Summarize the projected cash flow for [property] based on the [year] budget.')">Copy prompt</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="category">
+      <div class="category-label">Financial Statements</div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">What do the annual financial statements show for a given entity?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"Pull the most recent annual financial statements for <em>[entity name]</em> and summarize revenue, expenses, and net income."</div>
+          <p class="faq-note">Financial statements are stored on the Accounting site. Use the legal entity name (e.g., "TBCI Holdings I, LLC") for best results.</p>
+          <button class="copy-btn" onclick="copyPrompt(this, 'Pull the most recent annual financial statements for [entity name] and summarize revenue, expenses, and net income.')">Copy prompt</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- INVESTMENTS -->
+  <!-- ══════════════════════════════════════ -->
+  <section class="team-section" id="investments">
+    <div class="team-header">
+      <div class="team-icon">IN</div>
+      <h2>Investments</h2>
+    </div>
+
+    <div class="category">
+      <div class="category-label">Leviathan Fund</div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">How is a Leviathan property performing against its underwritten return?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"What is the underwritten IRR and current projected IRR for <em>[Leviathan property]</em>?"</div>
+          <p class="faq-note">Pulls from the Leviathan property-level projections table in the investor presentation. Also returns FMV, equity invested, and stabilized YOC.</p>
+          <button class="copy-btn" onclick="copyPrompt(this, 'What is the underwritten IRR and current projected IRR for [Leviathan property]?')">Copy prompt</button>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">What is the current equity allocation across the Leviathan fund?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"What is the current equity allocation by property in the Leviathan fund? What is still uninvested?"</div>
+          <p class="faq-note">Returns a breakdown of called capital by property, total committed equity, and remaining dry powder.</p>
+          <button class="copy-btn" onclick="copyPrompt(this, 'What is the current equity allocation by property in the Leviathan fund? What is still uninvested?')">Copy prompt</button>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">How do all Leviathan investments compare on returns?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"Compare the underwritten IRR to the current projected IRR across all Leviathan investments."</div>
+          <p class="faq-note">Returns the full property-level projections table with FMV, equity, YOC, and IRR for every active Leviathan investment.</p>
+          <button class="copy-btn" onclick="copyPrompt(this, 'Compare the underwritten IRR to the current projected IRR across all Leviathan investments.')">Copy prompt</button>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">What are the 2026 objectives for Leviathan properties?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"What are the 2026 business plan objectives for each Leviathan property?"</div>
+          <p class="faq-note">The Leviathan investor deck includes a property-by-property table of 2026 objectives covering leasing, capital, and strategic priorities.</p>
+          <button class="copy-btn" onclick="copyPrompt(this, 'What are the 2026 business plan objectives for each Leviathan property?')">Copy prompt</button>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">What is the total capitalization and FMV of a Leviathan property?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"What is the total capitalization, current FMV, and stabilized yield on cost for <em>[Leviathan property]</em>?"</div>
+          <button class="copy-btn" onclick="copyPrompt(this, 'What is the total capitalization, current FMV, and stabilized yield on cost for [Leviathan property]?')">Copy prompt</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="category">
+      <div class="category-label">Pipeline &amp; Market</div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">What deals are currently in our active pipeline?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"What properties are currently in our active deal pipeline and at what stage is each?"</div>
+          <p class="faq-note">Pipeline deals are tracked in the Leviathan investor presentations with transaction overviews, pricing, and current status for each active and evaluating deal.</p>
+          <button class="copy-btn" onclick="copyPrompt(this, 'What properties are currently in our active deal pipeline and at what stage is each?')">Copy prompt</button>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">What are the latest market observations from leadership?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"What were the key market observations from the most recent Asset Management meeting or Leviathan presentation?"</div>
+          <p class="faq-note">These decks include macro CRE observations, Boston-area market commentary, and strategic outlook from the investment team.</p>
+          <button class="copy-btn" onclick="copyPrompt(this, 'What were the key market observations from the most recent Asset Management meeting or Leviathan presentation?')">Copy prompt</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- PROPERTY MANAGEMENT -->
+  <!-- ══════════════════════════════════════ -->
+  <section class="team-section" id="property-mgmt">
+    <div class="team-header">
+      <div class="team-icon">PM</div>
+      <h2>Property Management</h2>
+    </div>
+
+    <div class="category">
+      <div class="category-label">Capital &amp; Maintenance</div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">What capital projects are planned at a property over the next several years?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"What capital projects are planned for <em>[property]</em> over the next 3–5 years? List project, priority, and estimated cost by year."</div>
+          <p class="faq-note">Pulls from the 5-Year Major R&amp;M and Capital Plan filed under each property's Annual Business Plan folder. Returns projects broken out by High/Medium/Low priority with year-by-year costs.</p>
+          <button class="copy-btn" onclick="copyPrompt(this, 'What capital projects are planned for [property] over the next 3–5 years? List project, priority, and estimated cost by year.')">Copy prompt</button>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">What major R&amp;M items are budgeted for a property this year?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"What major R&amp;M items are budgeted for <em>[property]</em> in <em>[year]</em>?"</div>
+          <button class="copy-btn" onclick="copyPrompt(this, 'What major R&M items are budgeted for [property] in [year]?')">Copy prompt</button>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">What is the total planned capital spend at a property over the next four years?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"What is the total planned capital spend at <em>[property]</em> for the next four years? Break out by year."</div>
+          <button class="copy-btn" onclick="copyPrompt(this, 'What is the total planned capital spend at [property] for the next four years? Break out by year.')">Copy prompt</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="category">
+      <div class="category-label">Operations</div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">Who are the vendors at a property and what do they do?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"Who are the vendors at <em>[property]</em> and what services do they provide? Pull from the vendor contact list."</div>
+          <p class="faq-note">Vendor contact lists are stored under each property's Service Contracts folder. Returns vendor names, services, contact names, phone, and email.</p>
+          <button class="copy-btn" onclick="copyPrompt(this, 'Who are the vendors at [property] and what services do they provide? Pull from the vendor contact list.')">Copy prompt</button>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">What did the environmental report say about a property?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"Pull the most recent Phase I environmental report for <em>[property]</em> and summarize the findings."</div>
+          <p class="faq-note">Phase I reports are stored under each property's Architecture &amp; Engineering folder. Returns key findings, recognized environmental conditions, and recommendations.</p>
+          <button class="copy-btn" onclick="copyPrompt(this, 'Pull the most recent Phase I environmental report for [property] and summarize the findings.')">Copy prompt</button>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">What is the current insurance policy for a property?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"What is the current insurance policy for <em>[property]</em> — carrier, coverage period, and premium?"</div>
+          <p class="faq-note">Insurance policies are filed under individual property folders as well as a portfolio-level allocation spreadsheet on the Asset Management site.</p>
+          <button class="copy-btn" onclick="copyPrompt(this, 'What is the current insurance policy for [property] — carrier, coverage period, and premium?')">Copy prompt</button>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">What are the utility costs budgeted for a property?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"What are the utility costs budgeted for <em>[property]</em> in <em>[year]</em>?"</div>
+          <button class="copy-btn" onclick="copyPrompt(this, 'What are the utility costs budgeted for [property] in [year]?')">Copy prompt</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="category">
+      <div class="category-label">Tenant &amp; Lease Administration</div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">What are all tenant lease dates at a property?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"What are the lease commencement and expiration dates for all tenants at <em>[property]</em>?"</div>
+          <p class="faq-note">Each tenant's lease is filed under the property's Tenants folder. For multi-tenant properties, each lease is read individually and summarized together.</p>
+          <button class="copy-btn" onclick="copyPrompt(this, 'What are the lease commencement and expiration dates for all tenants at [property]?')">Copy prompt</button>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">What tenant improvement allowances were granted to a tenant?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"What are the tenant improvement allowances in the lease for <em>[tenant]</em> at <em>[property]</em>?"</div>
+          <button class="copy-btn" onclick="copyPrompt(this, 'What are the tenant improvement allowances in the lease for [tenant] at [property]?')">Copy prompt</button>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">Has a tenant exercised their renewal option and what are the new terms?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"Has <em>[tenant]</em> exercised their renewal option at <em>[property]</em>? If so, what are the new terms?"</div>
+          <p class="faq-note">Checks lease amendments filed for the tenant. If a renewal has been documented, returns the new term, rent, and any changed conditions.</p>
+          <button class="copy-btn" onclick="copyPrompt(this, 'Has [tenant] exercised their renewal option at [property]? If so, what are the new terms?')">Copy prompt</button>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">Does a tenant have any co-tenancy clauses or exclusive use rights?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"Does <em>[tenant]</em> have any co-tenancy clauses, exclusives, or operating covenants in their lease at <em>[property]</em>?"</div>
+          <button class="copy-btn" onclick="copyPrompt(this, 'Does [tenant] have any co-tenancy clauses, exclusives, or operating covenants in their lease at [property]?')">Copy prompt</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- LEGAL -->
+  <!-- ══════════════════════════════════════ -->
+  <section class="team-section" id="legal">
+    <div class="team-header">
+      <div class="team-icon">LG</div>
+      <h2>Legal</h2>
+    </div>
+
+    <div class="category">
+      <div class="category-label">Lease Review</div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">What are the key business terms of a tenant's lease?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"Summarize the key business terms of the lease for <em>[tenant]</em> at <em>[property]</em> — term, rent, options, and any special provisions."</div>
+          <p class="faq-note">Returns a clean summary from the executed lease document. For tenants with multiple amendments, specify "including all amendments" to get the full current picture.</p>
+          <button class="copy-btn" onclick="copyPrompt(this, 'Summarize the key business terms of the lease for [tenant] at [property] — term, rent, options, and any special provisions.')">Copy prompt</button>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">Does a tenant have an early termination option and what are the requirements?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"Does <em>[tenant]</em> have an early termination option at <em>[property]</em>? What are the notice requirements and any fee obligations?"</div>
+          <p class="faq-note">Returns the termination effective date, required notice period, conditions (e.g., no default), and any termination fee or penalty payment due.</p>
+          <button class="copy-btn" onclick="copyPrompt(this, 'Does [tenant] have an early termination option at [property]? What are the notice requirements and any fee obligations?')">Copy prompt</button>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">What are the assignment and subletting provisions in a tenant's lease?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"What are the assignment and subletting provisions in <em>[tenant]</em>'s lease at <em>[property]</em>?"</div>
+          <button class="copy-btn" onclick="copyPrompt(this, 'What are the assignment and subletting provisions in [tenant]\'s lease at [property]?')">Copy prompt</button>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">Are there guarantee or letter of credit requirements in a tenant's lease?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"Are there any personal guarantee or letter of credit requirements in <em>[tenant]</em>'s lease at <em>[property]</em>?"</div>
+          <button class="copy-btn" onclick="copyPrompt(this, 'Are there any personal guarantee or letter of credit requirements in [tenant]\'s lease at [property]?')">Copy prompt</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="category">
+      <div class="category-label">Amendments</div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">What did the most recent lease amendment change?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"What is the most recent amendment to <em>[tenant]</em>'s lease at <em>[property]</em> and what did it change?"</div>
+          <p class="faq-note">Amendments are filed alongside lease documents in the Tenants folder. Returns the date, parties, and a summary of all changed terms.</p>
+          <button class="copy-btn" onclick="copyPrompt(this, 'What is the most recent amendment to [tenant]\'s lease at [property] and what did it change?')">Copy prompt</button>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">What is the full amendment history for a tenant's lease?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"List all amendments to <em>[tenant]</em>'s lease at <em>[property]</em> in chronological order and summarize each."</div>
+          <p class="faq-note">Useful for understanding the full evolution of a lease before a negotiation, renewal, or transaction. Returns date, key changes, and parties for each amendment.</p>
+          <button class="copy-btn" onclick="copyPrompt(this, 'List all amendments to [tenant]\'s lease at [property] in chronological order and summarize each.')">Copy prompt</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="category">
+      <div class="category-label">Estoppels</div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">Has an estoppel been executed for a tenant and what did it confirm?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"Has an estoppel been executed for <em>[tenant]</em> at <em>[property]</em>? When and what did it confirm?"</div>
+          <p class="faq-note">Estoppels are filed under the Tenants folder or the Disposition folder for sold properties. Returns the execution date and the key representations made by the tenant.</p>
+          <button class="copy-btn" onclick="copyPrompt(this, 'Has an estoppel been executed for [tenant] at [property]? When and what did it confirm?')">Copy prompt</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="category">
+      <div class="category-label">Loan Documents</div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">What are the recourse provisions in a loan agreement?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"What are the recourse provisions in the loan agreement for <em>[property]</em>?"</div>
+          <p class="faq-note">Returns whether the loan is recourse or non-recourse, and any carve-outs that create personal liability for the guarantor.</p>
+          <button class="copy-btn" onclick="copyPrompt(this, 'What are the recourse provisions in the loan agreement for [property]?')">Copy prompt</button>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">What events of default are defined in a loan agreement and what are the cure periods?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"What events of default are defined in the loan documents for <em>[property]</em> and what cure periods apply?"</div>
+          <button class="copy-btn" onclick="copyPrompt(this, 'What events of default are defined in the loan documents for [property] and what cure periods apply?')">Copy prompt</button>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">What are the prepayment terms for a loan?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"Summarize the prepayment terms for the loan at <em>[property]</em>."</div>
+          <p class="faq-note">Returns whether voluntary prepayment is permitted, any penalty or yield maintenance provisions, and required notice periods.</p>
+          <button class="copy-btn" onclick="copyPrompt(this, 'Summarize the prepayment terms for the loan at [property].')">Copy prompt</button>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">What financial reporting must the borrower provide under a loan?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-prompt">"What are the financial reporting covenants the borrower must satisfy under the loan at <em>[property]</em>?"</div>
+          <p class="faq-note">Returns the reporting schedule — typically quarterly rent rolls, annual financials, and any lender-specific certificate requirements.</p>
+          <button class="copy-btn" onclick="copyPrompt(this, 'What are the financial reporting covenants the borrower must satisfy under the loan at [property]?')">Copy prompt</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">
+    The Bulfinch Companies &nbsp;·&nbsp; Ask Bulfinch Prompt Guide &nbsp;·&nbsp; For internal use
+  </div>
+
+</div>
+
+<script>
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => {
+      const item = q.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+
+  function copyPrompt(btn, text) {
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = 'Copy prompt';
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  }
+</script>
+</body>
+</html>
